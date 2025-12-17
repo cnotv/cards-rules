@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Games Index</title>
+  <link rel="stylesheet" href="cards-common.css">
+  <style>
+    body { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 220px;
+      background: var(--box-bg, #fffbe7);
+      border-right: 1px solid #e0e0e0;
+      padding: 0;
+      box-shadow: 2px 0 8px #e0d9c6;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h2 {
+      font-size: 1.1em;
+      margin: 18px 0 8px 0;
+      padding-left: 18px;
+      color: var(--section-title, #4e944f);
+      border: none;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0 0 0 10px;
+      margin: 0;
+    }
+    .sidebar li {
+      margin: 0 0 6px 0;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: var(--main-title, #b85c38);
+      font-weight: bold;
+      padding: 6px 18px;
+      display: block;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      background: var(--tip-bg, #e6f7ff);
+      color: #222;
+    }
+    .main-content {
+      flex: 1;
+      padding: 0;
+      background: var(--main-bg, #e0f7fa);
+      display: flex;
+      flex-direction: column;
+    }
+    iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      min-height: 100vh;
+      background: #fff;
+    }
+    @media (max-width: 700px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e0e0e0; flex-direction: row; overflow-x: auto; }
+      .sidebar ul { display: flex; flex-direction: row; }
+      .sidebar li { margin: 0 8px 0 0; }
+      .main-content { min-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper" style="display:flex;width:100%;height:100vh;">
+    <nav class="sidebar">
+      <h2>French-suited Cards</h2>
+      <ul>
+        <li><a href="bridge.html" data-file="bridge.html">Bridge</a></li>
+        <li><a href="rummy.html" data-file="rummy.html">Rummy</a></li>
+        <li><a href="solitaire.html" data-file="solitaire.html">Solitaire</a></li>
+      </ul>
+      <h2>Italian-suited Cards</h2>
+      <ul>
+        <li><a href="briscola.html" data-file="briscola.html">Briscola</a></li>
+        <li><a href="buraco.html" data-file="buraco.html">Buraco</a></li>
+        <li><a href="canasta.html" data-file="canasta.html">Canasta</a></li>
+      </ul>
+    </nav>
+    <main class="main-content" style="flex:1;">
+      <iframe id="game-frame" src="canasta.html" title="Card Game"></iframe>
+    </main>
+  </div>
+  <script>
+    const links = document.querySelectorAll('.sidebar a');
+    const iframe = document.getElementById('game-frame');
+    links.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        links.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        const file = this.getAttribute('data-file');
+        iframe.src = file;
+      });
+    });
+    // Set default active
+    links.forEach(link => {
+      if(link.getAttribute('data-file') === iframe.src.split('/').pop()) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>
